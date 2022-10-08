@@ -2,10 +2,6 @@ window.env = {
     host: {
         virtualPath: ''
     },
-    esriJSAPI: {
-        assetsPath: './esri/arcgis-js-api/assets',
-        fontsUrl: './esri/arcgis-js-api/fonts'
-    },
     server: {
         url: 'http://localhost:8081/api/'
     },

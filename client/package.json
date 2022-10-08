@@ -8,10 +8,9 @@
         "name": "Fadi Al-Jabi"
     },
     "scripts": {
-        "start": "npm run copy && react-scripts start",
-        "build": "npm run copy && react-scripts build",
-        "build:staging": "env-cmd -f .env.staging npm run copy && react-scripts build",
-        "copy": "ncp ./node_modules/@arcgis/core/assets ./public/esri/arcgis-js-api/assets"
+        "start": "react-scripts start",
+        "build": "react-scripts build",
+        "build:staging": "env-cmd -f .env.staging react-scripts build"
     },
     "eslintConfig": {
         "extends": [

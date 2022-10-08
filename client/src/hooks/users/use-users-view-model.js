@@ -302,8 +302,8 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             .catch(error => {
 
                 setAddUserError(new Error(
-                    error.response.data.message ||
-                    [error.response.status, error.response.statusText].join(' ')
+                    error.response?.data?.message ||
+                    [error.message]
                 ));
             })
             .finally(_ => {
@@ -348,8 +348,8 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             .catch(error => {
 
                 setEditUserError(new Error(
-                    error.response.data.message ||
-                    [error.response.status, error.response.statusText].join(' ')
+                    error.response?.data?.message ||
+                    [error.message]
                 ));
             })
             .finally(_ => {
@@ -391,8 +391,8 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             .catch(error => {
 
                 setEditUserLocationError(new Error(
-                    error.response.data.message ||
-                    [error.response.status, error.response.statusText].join(' ')
+                    error.response?.data?.message ||
+                    [error.message]
                 ));
             })
             .finally(_ => {
@@ -428,8 +428,8 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             .catch(error => {
 
                 setDeleteUserError(new Error(
-                    error.response.data.message ||
-                    [error.response.status, error.response.statusText].join(' ')
+                    error.response?.data?.message ||
+                    [error.message]
                 ));
             })
             .finally(_ => {
@@ -478,9 +478,9 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
     }, []);
 
     useEffect(_ => {
-        
+
         if (!mapView?.ready) return;
-        
+
         let layer = new FeatureLayer({
             id: USERS_LAYER_ID,
             objectIdField: 'oid',
@@ -616,7 +616,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
     useEffect(_ => {
 
         // Sync selected user location on map when adding a new user
-        
+
         let selectedUserLocationGraphicLayer = mapView?.map.findLayerById(SELECTED_USER_LOCATION_LAYER_ID);
 
         selectedUserLocationGraphicLayer?.removeAll();
@@ -668,8 +668,8 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
                         setUsersLoading(false);
 
                         setUsersError(new Error(
-                            error.response.data.message ||
-                            [error.response.status, error.response.statusText].join(' ')
+                            error.response?.data?.message ||
+                            [error.message]
                         ));
                     }
                     else {
