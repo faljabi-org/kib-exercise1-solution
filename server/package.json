@@ -1,0 +1,28 @@
+{
+    "name": "kib-crud-exercise-server",
+    "description": "KIB crud exercise service layer",
+    "version": "1.0.0",
+    "author": {
+        "name": "Fadi Al-Jabi"
+    },
+    "main": "server.js",
+    "scripts": {
+        "start": "set NODE_ENV=development&&nodemon server.js"
+    },
+    "license": "ISC",
+    "dependencies": {
+        "axios": "^1.1.0",
+        "blocked-at": "^1.2.0",
+        "config": "^3.3.8",
+        "cors": "^2.8.5",
+        "express": "^4.18.1",
+        "firebase-admin": "^11.1.0",
+        "helmet": "^6.0.0",
+        "joi": "^17.6.2",
+        "luxon": "^3.0.4",
+        "uuid": "^9.0.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.20"
+    }
+}

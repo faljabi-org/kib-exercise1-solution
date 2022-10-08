@@ -1,0 +1,67 @@
+{
+    "name": "kib-crud-exercise-client",
+    "description": "KIB crud exercise client",
+    "version": "1.0.0",
+    "private": true,
+    "homepage": ".",
+    "author": {
+        "name": "Fadi Al-Jabi"
+    },
+    "scripts": {
+        "start": "npm run copy && react-scripts start",
+        "build": "npm run copy && react-scripts build",
+        "build:staging": "env-cmd -f .env.staging npm run copy && react-scripts build",
+        "copy": "ncp ./node_modules/@arcgis/core/assets ./public/esri/arcgis-js-api/assets"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app"
+        ]
+    },
+    "browserslist": {
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ],
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ]
+    },
+    "dependencies": {
+        "@arcgis/core": "^4.25.0-next.20221006",
+        "@emotion/react": "^11.10.4",
+        "@emotion/styled": "^11.10.4",
+        "@mui/base": "^5.0.0-alpha.100",
+        "@mui/icons-material": "^5.10.6",
+        "@mui/lab": "^5.0.0-alpha.102",
+        "@mui/material": "^5.10.8",
+        "@mui/system": "^5.10.8",
+        "@use-gesture/react": "^10.2.20",
+        "axios": "^1.1.2",
+        "i18next": "^21.10.0",
+        "i18next-fetch-backend": "^5.0.1",
+        "immer": "^9.0.15",
+        "ncp": "^2.0.0",
+        "react": "^18.3.0-next-5d60a0b84-20221006",
+        "react-dom": "^18.3.0-next-5d60a0b84-20221006",
+        "react-error-boundary": "^3.1.4",
+        "react-i18next": "^11.18.6",
+        "react-router-dom": "^6.4.2",
+        "react-scripts": "^5.0.1",
+        "react-spring": "^9.5.5",
+        "react-use": "^17.4.0",
+        "react-virtualized-auto-sizer": "^1.0.7",
+        "react-window": "^1.8.7",
+        "stylis-plugin-rtl": "^2.0.2",
+        "use-debounce": "^8.0.4",
+        "uuid": "^9.0.0",
+        "validator": "^13.7.0",
+        "zustand": "^4.1.1"
+    },
+    "devDependencies": {
+        "@welldone-software/why-did-you-render": "^7.0.1"
+    }
+}

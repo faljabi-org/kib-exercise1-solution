@@ -1,0 +1,11 @@
+{
+    "appName": "CRUD Exercise",
+    "internetConnectionRestored": "Your Internet connection is restored",
+    "internetConnectionOffline": "You are currently offline",
+    "notFound": "The page you have requested could not be found. Please go back to the homepage.",
+    "homepage": "Home",
+    "emptyAppScreens": "No access",
+    "emptyAppScreensTagline": "Contact KIB system administrator.",
+    "error": "Something went wrong",
+    "checkInternetConnection": "Please check your internet connection and try again"
+}

@@ -1,0 +1,7 @@
+{
+    "server": {
+        "name": "kib-crud-exercise-server",
+        "version": "1.0.0",
+        "description": "KIB crud exercise server"
+    }
+}

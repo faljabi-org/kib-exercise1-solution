@@ -1,0 +1,21 @@
+{
+    "loading": "Loading",
+    "loadingFailed": "Failed to load",
+    "overview": "Overview",
+    "details": "Details",
+    "add": "Add",
+    "edit": "Edit",
+    "save": "Save",
+    "delete": "Delete",
+    "yesDelete": "Yes, delete it",
+    "cancel": "Cancel",
+    "close": "Close",
+    "yesClose": "Yes, close",
+    "reset": "Reset",
+    "error": "Error",
+    "NA": "N/A",
+    "refresh": "Refresh",
+    "location": "Location",
+    "noResultsFound": "No Results Found",
+    "noResultsFoundTagline": "Try another search criteria."
+}

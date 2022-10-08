@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  client:
+    container_name: crud-exercise-client
+    build:
+      dockerfile: Dockerfile
+    ports:
+      - 8080:3000

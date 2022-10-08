@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+
+  server:
+    container_name: crud-exercise-server
+    build:
+      dockerfile: Dockerfile
+      context: 'server'
+    ports:
+      - 8081:8081
+    environment:
+      NODE_ENV: production
+      
+  client:
+    stdin_open: true
+    container_name: crud-exercise-client
+    build:
+      dockerfile: Dockerfile
+      context: 'client'
+    ports:
+      - 8080:3000
