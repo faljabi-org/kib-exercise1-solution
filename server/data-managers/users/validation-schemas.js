@@ -42,7 +42,6 @@ const validationSchemas = {
                 .trim()
                 .allow('')
                 .max(100)
-                .uri()
                 .required(),
             company: Joi.object({
                 name: Joi.string()

@@ -1,12 +1,12 @@
 import { createContext, useContext } from 'react';
 import shallow from 'zustand/shallow';
 
-import { APP_SCREEN_TAB_INDEX } from 'constants/appConstants';
+import { useMapViewContext } from 'contexts/MapViewContext';
 
 import useLayoutStore from 'stores/layoutStore';
 import useUsersViewModel from 'hooks/users/use-users-view-model';
 
-import { useMapViewContext } from 'contexts/MapViewContext';
+import { APP_SCREEN_TAB_INDEX } from 'constants/appConstants';
 
 const UsersContext = createContext();
 
