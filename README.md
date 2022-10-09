@@ -5,6 +5,7 @@ E2E Application Development
 ## Prerequisites
 
 - Docker
+- Navigate to exercise1 folder
 
 ## Usage
 
