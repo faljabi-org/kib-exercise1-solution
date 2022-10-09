@@ -84,7 +84,7 @@ const SelectedUserDetails = ({
             elevation={0}>
             <SelectedItemCardHeader
                 title={selectedItem.name}
-                subtitle={selectedItem.username}
+                subtitle={`@${selectedItem.username}`}
                 iconColor='#0288d1'
                 Icon={AccountCircle}
                 onActionClick={onZoom}
