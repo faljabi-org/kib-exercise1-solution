@@ -277,7 +277,11 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             .then(response => {
 
                 let { result } = response.data;
-                if (result === true) setUsersRefreshId(uuidv4());
+                if (result === true) {
+
+                    clearUserSelection();
+                    setUsersRefreshId(uuidv4());
+                }
             })
             .catch(error => {
 
@@ -288,7 +292,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
                 setResetUsersLoading(false);
             });
 
-    }, []);
+    }, [clearUserSelection]);
 
     const addUser = useCallback(user => {
 
