@@ -192,8 +192,8 @@ const ManageUserDialog = ({
                                 inputRef={companyName.ref}
                                 fullWidth
                                 required
-                                label={t('users@companyName')}
-                                placeholder={t('users@addCompanyName')}
+                                label={t('users@company')}
+                                placeholder={t('users@addCompany')}
                                 inputProps={{ maxLength: 100 }}
                                 InputLabelProps={{ shrink: true }}
                                 value={companyName.value}

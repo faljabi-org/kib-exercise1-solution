@@ -2,9 +2,11 @@ import { useState, memo } from 'react';
 import { useTranslation } from 'react-i18next';
 
 import Stack from '@mui/material/Stack';
+import Fade from '@mui/material/Grow';
 import LoadingButton from '@mui/lab/LoadingButton';
 import EditIcon from '@mui/icons-material/Edit';
 import EditLocationAltIcon from '@mui/icons-material/EditLocationAlt';
+import CallIcon from '@mui/icons-material/Call';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import DeleteConfirmationDialog from 'components/common/DeleteConfirmationDialog';
@@ -28,26 +30,39 @@ const SelectedUserActions = ({
     return (
         <>
             <Stack direction='column' spacing={2}>
+                <Fade in timeout={700}>
+                    {selectedItem.phone.trim() && <Stack direction='row' spacing={1} width={1} justifyContent='center' alignItems='center'>
+                        <LoadingButton
+                            sx={theme => ({
+                                borderRadius: theme.spacing(1.5),
+                                mx: 12,
+                                background: theme => `linear-gradient(to right, ${theme.palette.success.light} 0%, ${theme.palette.success.dark} 100%)`
+                            })}
+                            fullWidth
+                            size='large'
+                            variant='contained'
+                            loadingPosition='start'
+                            loading={usersLoading || editLocationLoading}
+                            startIcon={<CallIcon />}
+                            onClick={_ => window.location.href = `tel:${selectedItem.phone}`}>
+                            {t('calls@call')}
+                        </LoadingButton>
+                    </Stack>}
+                </Fade>
                 <Stack direction='row' spacing={1} width={1} justifyContent='center' alignItems='center'>
                     <LoadingButton
-                        sx={theme => ({
-                            width: 220,
-                            borderRadius: theme.spacing(1.5),
-                            background: theme => `linear-gradient(to right, ${theme.palette.primary.light} 0%, ${theme.palette.primary.dark} 100%)`
-                        })}
-                        size='large'
-                        variant='contained'
+                        sx={{
+                            borderRadius: theme => theme.spacing(1.5)
+                        }}
+                        variant='outlined'
                         loadingPosition='start'
                         loading={usersLoading || editLocationLoading}
                         startIcon={<EditIcon />}
                         onClick={onStartEdit}>
                         {t('common@edit')}
                     </LoadingButton>
-                </Stack>
-                <Stack direction='row' spacing={1} width={1} justifyContent='center' alignItems='center'>
                     <LoadingButton
                         sx={{
-                            width: 120,
                             borderRadius: theme => theme.spacing(1.5)
                         }}
                         variant={editLocationStarted ? 'contained' : 'outlined'}
@@ -60,7 +75,6 @@ const SelectedUserActions = ({
                     </LoadingButton>
                     <LoadingButton
                         sx={{
-                            width: 120,
                             borderRadius: theme => theme.spacing(1.5)
                         }}
                         variant='outlined'

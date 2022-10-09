@@ -5,8 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 import validator from 'validator';
 
-import { blueGrey, common } from '@mui/material/colors';
-
 import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 import GraphicsLayer from '@arcgis/core/layers/GraphicsLayer';
 import Graphic from '@arcgis/core/Graphic';
@@ -38,6 +36,10 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
         clearFeautureSelectionOnMap
 
     } = useMapViewHelper({ mapView });
+
+
+    const [resetUsersLoading, setResetUsersLoading] = useState(false);
+    const [resetUsersError, setResetUsersError] = useState(null);
 
     const [users, setUsers] = useState([]);
     const [usersLoading, setUsersLoading] = useState(false);
@@ -232,13 +234,13 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             validationResults.push({ email: t('users@validEmailRequired') });
 
         if (!validator.isLength(phone, { min: 1, max: 30 }))
-            validationResults.push({ phone: t('users@validNameRequired') });
+            validationResults.push({ phone: t('users@validPhoneRequired') });
 
         if (website.trim() && !validator.isURL(website, { require_protocol: true }))
             validationResults.push({ website: t('users@validWebsiteRequired') });
 
         if (!validator.isLength(companyName, { min: 1, max: 100 }))
-            validationResults.push({ companyName: t('users@validCompanyNameRequired') });
+            validationResults.push({ companyName: t('users@validCompanyRequired') });
 
         if (!validator.isLength(companyCatchPhrase, { min: 0, max: 100 }))
             validationResults.push({ companyCatchPhrase: t('users@validCompanyCatchPhraseRequired') });
@@ -263,6 +265,30 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
         return validationResults;
 
     }, [t]);
+
+    const resetUsers = useCallback(_ => {
+
+        setResetUsersLoading(true);
+
+        server
+            .post('users/reset', {
+                guid: uuidv4()
+            })
+            .then(response => {
+
+                let { result } = response.data;
+                if (result === true) setUsersRefreshId(uuidv4());
+            })
+            .catch(error => {
+
+                setResetUsersError(new Error(error.response?.data?.message || error.message));
+            })
+            .finally(_ => {
+
+                setResetUsersLoading(false);
+            });
+
+    }, []);
 
     const addUser = useCallback(user => {
 
@@ -291,7 +317,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
 
                 if (result === true) {
 
-                    setAddUserResult(result);
+                    setAddUserResult(true);
                     endAddUser();
 
                     setUsersRefreshId(uuidv4());
@@ -299,10 +325,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             })
             .catch(error => {
 
-                setAddUserError(new Error(
-                    error.response?.data?.message ||
-                    [error.message]
-                ));
+                setAddUserError(new Error(error.response?.data?.message || error.message));
             })
             .finally(_ => {
 
@@ -345,10 +368,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             })
             .catch(error => {
 
-                setEditUserError(new Error(
-                    error.response?.data?.message ||
-                    [error.message]
-                ));
+                setEditUserError(new Error(error.response?.data?.message || error.message));
             })
             .finally(_ => {
 
@@ -364,7 +384,6 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
         server
             .put('users', {
                 ...selectedUser,
-                id: selectedUser.id.toString(),
                 address: {
                     ...selectedUser.address,
                     geo: {
@@ -388,10 +407,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             })
             .catch(error => {
 
-                setEditUserLocationError(new Error(
-                    error.response?.data?.message ||
-                    [error.message]
-                ));
+                setEditUserLocationError(new Error(error.response?.data?.message || error.message));
             })
             .finally(_ => {
 
@@ -425,10 +441,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             })
             .catch(error => {
 
-                setDeleteUserError(new Error(
-                    error.response?.data?.message ||
-                    [error.message]
-                ));
+                setDeleteUserError(new Error(error.response?.data?.message || error.message));
             })
             .finally(_ => {
 
@@ -443,7 +456,17 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
 
             user.name,
             user.username,
-            user.email
+            user.email,
+            user.phone,
+            user.website,
+            user.company.name,
+            user.company.catchPhrase,
+            user.company.bs,
+            user.address.city,
+            user.address.street,
+            user.address.suite,
+            user.address.zipcode
+
         ]
             .filter(Boolean).join(' ');
 
@@ -459,7 +482,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
 
     }, []);
 
-    const resetCRUDStates = useCallback(_ => {
+    const resetCRUDState = useCallback(_ => {
 
         setAddUserResult(false);
         setAddUserError(null);
@@ -479,12 +502,12 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
 
         if (!mapView?.ready) return;
 
-        let layer = new FeatureLayer({
+        const layer = new FeatureLayer({
             id: USERS_LAYER_ID,
             objectIdField: 'oid',
-            legendEnabled: true,
             geometryType: 'point',
             spatialReference: mapView.spatialReference,
+            featureEffect: DEFAULT_LAYER_EFFECT,
             outFields: ['*'],
             source: [],
             fields: [{
@@ -514,24 +537,21 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
             labelingInfo: {
                 symbol: {
                     type: 'text',
-                    color: common.white,
-                    haloColor: blueGrey[900],
+                    color: '#ffffff',
+                    haloColor: '#000000',
                     haloSize: 1.5,
                     font: {
-                        family: 'sans-serif-regular',
-                        size: 12,
-                        weight: 'bold'
+                        size: 12
                     }
                 },
                 labelPlacement: 'above-center',
                 labelExpressionInfo: {
                     expression: '$feature.label'
                 }
-            },
-            featureEffect: DEFAULT_LAYER_EFFECT
+            }
         });
 
-        let selectedUserLocationGraphicLayer = new GraphicsLayer({ id: SELECTED_USER_LOCATION_LAYER_ID, listMode: 'hide' });
+        const selectedUserLocationGraphicLayer = new GraphicsLayer({ id: SELECTED_USER_LOCATION_LAYER_ID, listMode: 'hide' });
 
         mapView.map.addMany([layer, selectedUserLocationGraphicLayer], Number.MAX_VALUE);
 
@@ -542,15 +562,6 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
         }
 
     }, [mapView, t]);
-
-    useEffect(_ => {
-
-        if (!mapView?.ready) return;
-
-        let layer = mapView.map.findLayerById(USERS_LAYER_ID);
-        layer?.when(_ => layer.visible = viewVisible);
-
-    }, [mapView, viewVisible]);
 
     useEffect(_ => {
 
@@ -594,8 +605,6 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
     }, [mapView, manageUserStarted, manageUserDialogMode]);
 
     useEffect(_ => {
-
-        // Handle map click to edit existing user location
 
         if (editUserLocationStarted) {
 
@@ -665,10 +674,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
                         setUsers([]);
                         setUsersLoading(false);
 
-                        setUsersError(new Error(
-                            error.response?.data?.message ||
-                            [error.message]
-                        ));
+                        setUsersError(new Error(error.response?.data?.message || error.message));
                     }
                     else {
 
@@ -683,6 +689,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
         return _ => {
 
             setUsersError(null);
+
             controller.abort();
         }
 
@@ -723,17 +730,17 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
 
                         }).catch(e => {
 
-                            console.info(e.message);
+                            console.error(e.message);
                         });
 
                     }).catch(e => {
 
-                        console.info(e.message);
+                        console.error(e.message);
                     });
             })
             .catch(e => {
 
-                console.info(e.message);
+                console.error(e.message);
             });
 
     }, [mapView, users, t]);
@@ -796,6 +803,9 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
 
     return {
         viewVisible,
+        resetUsers,
+        resetUsersLoading,
+        resetUsersError,
         users,
         usersLoading,
         usersError,
@@ -838,7 +848,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
         setUserLocation,
         editSelectedUserLocation,
         deleteUser,
-        resetCRUDStates
+        resetCRUDState
     }
 }
 

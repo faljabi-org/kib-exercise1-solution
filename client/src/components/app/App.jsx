@@ -55,9 +55,9 @@ const App = _ => {
     return (
         <MapContextProvider>
             <MapViewContextProvider>
-                <AppHeader />
                 <MainMap />
                 <UsersContextProvider>
+                    <AppHeader />
                     <MapContextMenu />
                     {smallScreen ?
                         <AppBottomSheet>

@@ -31,8 +31,6 @@ const UsersList = forwardRef(({ items, onItemSelect, onItemHover, onItemBlur }, 
                                 <Box
                                     sx={{
                                         ...style,
-                                        px: 2,
-                                        top: style.top + 16,
                                         height: USER_LIST_ITEM_SIZE + 88
                                     }}>
                                     <UserListItem

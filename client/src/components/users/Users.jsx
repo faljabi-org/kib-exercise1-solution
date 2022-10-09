@@ -52,7 +52,7 @@ const Users = _ => {
         editUserLocationError,
         deleteUserResult,
         deleteUserError,
-        resetCRUDStates,
+        resetCRUDState,
         highlightUserOnMap,
         clearUserHighlightOnMap,
         selectUser,
@@ -97,14 +97,14 @@ const Users = _ => {
             }));
         }
 
-        return _ => resetCRUDStates();
+        return _ => resetCRUDState();
 
     }, [
         editUserLocationResult,
         editUserLocationError,
         deleteUserResult,
         deleteUserError,
-        resetCRUDStates,
+        resetCRUDState,
         openSuccessSnackbar,
         openErrorSnackbar,
         t

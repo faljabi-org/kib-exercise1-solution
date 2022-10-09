@@ -35,7 +35,7 @@ const UsersDialogs = _ => {
         editUserResult,
         editUserLoading,
         editUserError,
-        resetCRUDStates,
+        resetCRUDState,
         manageUserValidationResults,
         selectedUser,
         endAddUser,
@@ -91,7 +91,7 @@ const UsersDialogs = _ => {
             }));
         }
 
-        return _ => resetCRUDStates();
+        return _ => resetCRUDState();
 
     }, [
         viewVisible,
@@ -99,7 +99,7 @@ const UsersDialogs = _ => {
         addUserError,
         editUserResult,
         editUserError,
-        resetCRUDStates,
+        resetCRUDState,
         openInfoSnackbar,
         openSuccessSnackbar,
         openErrorSnackbar,

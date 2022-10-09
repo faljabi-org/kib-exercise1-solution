@@ -11,10 +11,15 @@ import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Link from '@mui/material/Link';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-import NoteAltOutlinedIcon from '@mui/icons-material/NoteAltOutlined';
-import EmojiPeopleIcon from '@mui/icons-material/EmojiPeople';
-import CheckIcon from '@mui/icons-material/Check';
+import LanguageIcon from '@mui/icons-material/Language';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import LocationCityIcon from '@mui/icons-material/LocationCity';
+import SignpostIcon from '@mui/icons-material/Signpost';
+import OtherHousesIcon from '@mui/icons-material/OtherHouses';
+import PersonPinIcon from '@mui/icons-material/PersonPin';
 
 import SelectedItemCardHeader from 'components/common/SelectedItemCardHeader';
 import SelectedUserActions from 'components/users/SelectedUserActions';
@@ -99,38 +104,90 @@ const SelectedUserDetails = ({
                     />
                 </Box>
                 <Tabs value={detailsTabIndex} indicatorColor='secondary' onChange={changeDetailsTabIndex}>
-                    <Tab label={t('common@overview')} />
-                    <Tab label={t('users@userContact')} />
+                    <Tab label={t('users@basicInfo')} />
+                    <Tab label={t('users@contactInfo')} />
+                    <Tab label={t('users@addressInfo')} />
                 </Tabs>
                 {detailsTabIndex === 0 && <List dense>
                     <ListItem>
                         <ListItemIcon>
-                            <NoteAltOutlinedIcon />
+                            <LanguageIcon />
                         </ListItemIcon>
                         <ListItemText
                             sx={{ wordBreak: 'break-word' }}
-                            primary={selectedItem.Description || t('common@NA')}
-                            secondary={t('users@TODO')} />
-                    </ListItem>
-                    <ListItem>
-                        <ListItemIcon>
-                            <EmojiPeopleIcon />
-                        </ListItemIcon>
-                        <ListItemText
-                            sx={{ wordBreak: 'break-word' }}
-                            primary={selectedItem.OpenedBy || t('common@NA')}
-                            secondary={t('users@TODO')} />
+                            primary={selectedItem.website ? <Link
+                                underline='none'
+                                target='_blank'
+                                href={`${selectedItem.website}`}>
+                                {selectedItem.website}
+                            </Link> : t('common@NA')}
+                            secondary={t('users@website')} />
                     </ListItem>
                 </List>}
                 {detailsTabIndex === 1 && <List dense>
                     <ListItem>
                         <ListItemIcon>
-                            <CheckIcon />
+                            <EmailIcon />
                         </ListItemIcon>
                         <ListItemText
                             sx={{ wordBreak: 'break-word' }}
-                            primary={selectedItem.ResolutionDetails || t('common@NA')}
-                            secondary={t('users@TODO')} />
+                            primary={selectedItem.email ? <Link
+                                underline='none'
+                                href={`mailto:${selectedItem.email}`}>
+                                {selectedItem.email}
+                            </Link> : t('common@NA')}
+                            secondary={t('users@email')} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <PhoneIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ wordBreak: 'break-word' }}
+                            primary={selectedItem.phone ? <Link
+                                underline='none'
+                                href={`tel:${selectedItem.phone}`}>
+                                {selectedItem.phone}
+                            </Link> : t('common@NA')}
+                            secondary={t('users@phone')} />
+                    </ListItem>
+                </List>}
+                {detailsTabIndex === 2 && <List dense>
+                    <ListItem>
+                        <ListItemIcon>
+                            <LocationCityIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ wordBreak: 'break-word' }}
+                            primary={selectedItem.address.city || t('common@NA')}
+                            secondary={t('users@city')} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <SignpostIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ wordBreak: 'break-word' }}
+                            primary={selectedItem.address.street || t('common@NA')}
+                            secondary={t('users@street')} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <OtherHousesIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ wordBreak: 'break-word' }}
+                            primary={selectedItem.address.suite || t('common@NA')}
+                            secondary={t('users@suite')} />
+                    </ListItem>
+                    <ListItem>
+                        <ListItemIcon>
+                            <PersonPinIcon />
+                        </ListItemIcon>
+                        <ListItemText
+                            sx={{ wordBreak: 'break-word' }}
+                            primary={selectedItem.address.zipcode || t('common@NA')}
+                            secondary={t('users@zipcode')} />
                     </ListItem>
                 </List>}
             </CardContent>

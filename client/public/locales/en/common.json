@@ -1,8 +1,6 @@
 {
     "loading": "Loading",
     "loadingFailed": "Failed to load",
-    "overview": "Overview",
-    "details": "Details",
     "add": "Add",
     "edit": "Edit",
     "save": "Save",
