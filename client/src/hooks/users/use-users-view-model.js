@@ -31,16 +31,18 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
     const { t } = useTranslation();
 
     const {
+
         highlightFeatureOnMap,
         clearFeatureHighlightOnMap,
         selectFeatureOnMap,
         clearFeautureSelectionOnMap
+
     } = useMapViewHelper({ mapView });
 
     const [users, setUsers] = useState([]);
     const [usersLoading, setUsersLoading] = useState(false);
     const [usersError, setUsersError] = useState(null);
-    const [usersRefreshId, setUsersRefreshId] = useState(null);
+    const [usersRefreshId, setUsersRefreshId] = useState(uuidv4());
 
     const [usersLayerRefreshId, setUsersLayerRefreshId] = useState(uuidv4());
 
@@ -73,11 +75,7 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
     const [deleteUserLoading, setDeleteUserLoading] = useState(false);
     const [deleteUserError, setDeleteUserError] = useState(null);
 
-    const selectedUser = useMemo(_ => {
-
-        return users.find(user => user.id === selectedUserId?.value);
-
-    }, [users, selectedUserId]);
+    const selectedUser = useMemo(_ => users.find(user => user.id === selectedUserId?.value), [users, selectedUserId]);
 
     const highlightUserOnMap = useCallback(userId => {
 
@@ -220,11 +218,11 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
 
         let { name, username, email, phone, website,
             company: { name: companyName, catchPhrase: companyCatchPhrase, bs: companyBS },
-            address: { city: addressCity, street: addressStreet, suite: addressSuite, zipcode: addressZipcode } } = user;
+            address: { city, street, suite, zipcode } } = user;
 
         let validationResults = [];
 
-        if (!validator.isLength(name, { min: 1, max: 1000 }))
+        if (!validator.isLength(name, { min: 1, max: 100 }))
             validationResults.push({ name: t('users@validNameRequired') });
 
         if (!validator.isLength(username, { min: 1, max: 30 }) || !validator.matches(username, "^[a-zA-Z0-9_.-]*$"))
@@ -248,17 +246,17 @@ const useUsersViewModel = ({ mapView, viewVisible }) => {
         if (!validator.isLength(companyBS, { min: 0, max: 100 }))
             validationResults.push({ companyBS: t('users@validCompanyBSRequired') });
 
-        if (!validator.isLength(addressCity, { min: 1, max: 100 }))
-            validationResults.push({ addressCity: t('users@validAddressCityRequired') });
+        if (!validator.isLength(city, { min: 1, max: 100 }))
+            validationResults.push({ city: t('users@validCityRequired') });
 
-        if (!validator.isLength(addressStreet, { min: 1, max: 100 }))
-            validationResults.push({ addressStreet: t('users@validAddressStreetRequired') });
+        if (!validator.isLength(street, { min: 1, max: 100 }))
+            validationResults.push({ street: t('users@validStreetRequired') });
 
-        if (!validator.isLength(addressSuite, { min: 0, max: 100 }))
-            validationResults.push({ addressSuite: t('users@validAddressSuiteRequired') });
+        if (!validator.isLength(suite, { min: 0, max: 100 }))
+            validationResults.push({ suite: t('users@validSuiteRequired') });
 
-        if (!validator.isLength(addressZipcode, { min: 0, max: 100 }))
-            validationResults.push({ addressZipcode: t('users@validAddressZipcodeRequired') });
+        if (!validator.isLength(zipcode, { min: 0, max: 100 }))
+            validationResults.push({ zipcode: t('users@validZipcodeRequired') });
 
         setManageUserValidationResults([...validationResults]);
 

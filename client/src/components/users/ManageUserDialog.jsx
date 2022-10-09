@@ -43,10 +43,10 @@ const ManageUserDialog = ({
     let companyName = useFormInput(mode ? selectedItem.company.name : '');
     let companyCatchPhrase = useFormInput(mode ? selectedItem.company.catchPhrase : '');
     let companyBS = useFormInput(mode ? selectedItem.company.bs : '');
-    let addressCity = useFormInput(mode ? selectedItem.address.city : '');
-    let addressStreet = useFormInput(mode ? selectedItem.address.street : '');
-    let addressSuite = useFormInput(mode ? selectedItem.address.suite : '');
-    let addressZipcode = useFormInput(mode ? selectedItem.address.zipcode : '');
+    let city = useFormInput(mode ? selectedItem.address.city : '');
+    let street = useFormInput(mode ? selectedItem.address.street : '');
+    let suite = useFormInput(mode ? selectedItem.address.suite : '');
+    let zipcode = useFormInput(mode ? selectedItem.address.zipcode : '');
 
     const submitUserForm = useCallback(_ => {
 
@@ -62,16 +62,16 @@ const ManageUserDialog = ({
                 bs: companyBS.value.trim()
             },
             address: {
-                city: addressCity.value.trim(),
-                street: addressStreet.value.trim(),
-                suite: addressSuite.value.trim(),
-                zipcode: addressZipcode.value.trim()
+                city: city.value.trim(),
+                street: street.value.trim(),
+                suite: suite.value.trim(),
+                zipcode: zipcode.value.trim()
             }
         };
 
         mode ? onEdit(user) : onAdd(user);
 
-    }, [mode, name, username, email, phone, website, companyName, companyCatchPhrase, companyBS, addressCity, addressStreet, addressSuite, addressZipcode, onAdd, onEdit]);
+    }, [mode, name, username, email, phone, website, companyName, companyCatchPhrase, companyBS, city, street, suite, zipcode, onAdd, onEdit]);
 
     const cancelSubmitUserForm = useCallback(_ => {
 
@@ -235,60 +235,60 @@ const ManageUserDialog = ({
 
                         <Grid item xs={6} md={3}>
                             <TextField
-                                inputRef={addressCity.ref}
+                                inputRef={city.ref}
                                 fullWidth
                                 required
-                                label={t('users@addressCity')}
-                                placeholder={t('users@addAddressCity')}
+                                label={t('users@city')}
+                                placeholder={t('users@addCity')}
                                 inputProps={{ maxLength: 100 }}
                                 InputLabelProps={{ shrink: true }}
-                                value={addressCity.value}
-                                onChange={addressCity.onChange}
-                                error={!!validationResults.find(r => r.addressCity)}
-                                helperText={validationResults.find(r => r.addressCity)?.addressCity}>
+                                value={city.value}
+                                onChange={city.onChange}
+                                error={!!validationResults.find(r => r.city)}
+                                helperText={validationResults.find(r => r.city)?.city}>
                             </TextField>
                         </Grid>
                         <Grid item xs={6} md={3}>
                             <TextField
-                                inputRef={addressStreet.ref}
+                                inputRef={street.ref}
                                 fullWidth
                                 required
-                                label={t('users@addressStreet')}
-                                placeholder={t('users@addAddressStreet')}
+                                label={t('users@street')}
+                                placeholder={t('users@addStreet')}
                                 inputProps={{ maxLength: 100 }}
                                 InputLabelProps={{ shrink: true }}
-                                value={addressStreet.value}
-                                onChange={addressStreet.onChange}
-                                error={!!validationResults.find(r => r.addressStreet)}
-                                helperText={validationResults.find(r => r.addressStreet)?.addressStreet}>
+                                value={street.value}
+                                onChange={street.onChange}
+                                error={!!validationResults.find(r => r.street)}
+                                helperText={validationResults.find(r => r.street)?.street}>
                             </TextField>
                         </Grid>
                         <Grid item xs={6} md={3}>
                             <TextField
-                                inputRef={addressSuite.ref}
+                                inputRef={suite.ref}
                                 fullWidth
-                                label={t('users@addressSuite')}
-                                placeholder={t('users@addAddressSuite')}
+                                label={t('users@suite')}
+                                placeholder={t('users@addSuite')}
                                 inputProps={{ maxLength: 100 }}
                                 InputLabelProps={{ shrink: true }}
-                                value={addressSuite.value}
-                                onChange={addressSuite.onChange}
-                                error={!!validationResults.find(r => r.addressSuite)}
-                                helperText={validationResults.find(r => r.addressSuite)?.addressSuite}>
+                                value={suite.value}
+                                onChange={suite.onChange}
+                                error={!!validationResults.find(r => r.suite)}
+                                helperText={validationResults.find(r => r.suite)?.suite}>
                             </TextField>
                         </Grid>
                         <Grid item xs={6} md={3}>
                             <TextField
-                                inputRef={addressZipcode.ref}
+                                inputRef={zipcode.ref}
                                 fullWidth
-                                label={t('users@addressZipcode')}
-                                placeholder={t('users@addAddressZipcode')}
+                                label={t('users@zipcode')}
+                                placeholder={t('users@addZipcode')}
                                 inputProps={{ maxLength: 10 }}
                                 InputLabelProps={{ shrink: true }}
-                                value={addressZipcode.value}
-                                onChange={addressZipcode.onChange}
-                                error={!!validationResults.find(r => r.addressZipcode)}
-                                helperText={validationResults.find(r => r.addressZipcode)?.addressZipcode}>
+                                value={zipcode.value}
+                                onChange={zipcode.onChange}
+                                error={!!validationResults.find(r => r.zipcode)}
+                                helperText={validationResults.find(r => r.zipcode)?.zipcode}>
                             </TextField>
                         </Grid>
 

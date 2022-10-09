@@ -16,11 +16,7 @@ const reset = async _ => {
 
             return db.collection('users').listDocuments().then(users => {
 
-                // Clear users collection
-
                 users.map(user => batch.delete(user));
-
-                // Populate users collections
 
                 response.data.forEach(user => {
 
@@ -30,20 +26,18 @@ const reset = async _ => {
                     batch.set(userRef, { ...user, id: userId });
                 });
 
-                // Commit changes
-
                 return batch
                     .commit()
                     .then(_ => true)
                     .catch(error => {
 
-                        throw new Error(`An error occured resetting users: ${error.message}`);
+                        throw new Error(`Failed to reset users: ${error.message}`);
                     });
             });
         })
         .catch(error => {
 
-            throw new Error(`An error occured resetting users: ${error.message}`);
+            throw new Error(`Failed to reset users: ${error.message}`);
         });
 }
 
@@ -64,32 +58,30 @@ const searchUsers = async _ => {
     }
     catch (error) {
 
-        throw new Error(`An error occured fetching users: ${error.message}`);
+        throw new Error(`Failed to fetch users: ${error.message}`);
     }
 }
 
 const upsertUser = async user => {
 
-    return await db.collection('users').doc(user.id.toString()).set(user).then(_ => {
+    return await db.collection('users').doc(user.id.toString()).set(user)
 
-        return true;
+        .then(_ => true)
+        .catch(error => {
 
-    }).catch(error => {
-
-        throw new Error(`Failed to add/update user: ${error.message}`);
-    });
+            throw new Error(`Failed to add user: ${error.message}`);
+        });
 }
 
 const deleteUser = async user => {
 
-    return await db.collection('users').doc(user.id.toString()).delete().then(_ => {
+    return await db.collection('users').doc(user.id.toString()).delete()
 
-        return true;
+        .then(_ => true)
+        .catch(error => {
 
-    }).catch(error => {
-
-        throw new Error(`Failed to delete user: ${error.message}`);
-    });
+            throw new Error(`Failed to delete user: ${error.message}`);
+        });
 }
 
 const UsersDataManager = {
