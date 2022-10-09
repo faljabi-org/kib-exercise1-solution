@@ -19,7 +19,6 @@
         "firebase-admin": "^11.1.0",
         "helmet": "^6.0.0",
         "joi": "^17.6.2",
-        "luxon": "^3.0.4",
         "uuid": "^9.0.0"
     },
     "devDependencies": {
